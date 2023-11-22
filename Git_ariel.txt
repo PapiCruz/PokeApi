@@ -1,0 +1,51 @@
+def graficar_datos(data):
+    print ("La altura de los pokemón que deseas graficar se guardarán aquí para graficarlos.")
+    grafica = input("\nIngrese el nombre de cómo quiere que se llame el documento con los datos a graficar: ")
+    try:
+        with open(grafica,'a') as dato:
+            dato.write(f"Nombre: {data['name'].capitalize()}\n")
+            dato.write(f"Altura: {data['height']/10} metros\n")
+            dato.write(f"Peso: {data['weight']/10} kg\n")
+            nombres.append(data['name'])
+            altura.append(data['height']/10)
+            peso.append(data['weight']/10)
+            dato.write("\n")
+        print(f"Los datos se guardaron con éxito, en '{grafica}' correctamente.")
+    except:
+        print("No se pudieron guardar los datos, Intente de nuevo.")
+
+
+def mostrar_gra():
+    grafica = input("\nIngrese el nombre del archivo donde guardo los datos a graficar: ")
+
+    try:
+        with open(grafica, 'a') as dato:
+            plt.subplot(1,3,1)
+            plt.plot(nombres,altura, label="altura", color="green", marker="<")
+            plt.title("Alturas pokemon")
+            plt.ylabel('altura en metros')
+            plt.yticks(np.arange(0,21,1))
+            plt.grid()
+            plt.minorticks_on()
+            plt.legend()
+            plt.subplot(1,3,2)
+            plt.plot(nombres,peso, label="peso", color="red", marker="*", linestyle='--')
+            plt.title("Peso de los pokemon")
+            plt.ylabel('peso en kilogramos')
+            plt.yticks(np.arange(0,601,20))
+            plt.grid()
+            plt.minorticks_on()
+            plt.legend()
+            plt.subplot(1,3,3)
+            promedios = []
+            media = numpy.mean(altura)
+            mediana = numpy.median(altura)
+            promedios.append(media)
+            promedios.append(mediana)
+            plt.plot(estadistica,promedios, label="promedios", color="black",marker="x", linestyle=' ')
+            plt.title("Alturas Estadisticas")
+            plt.yticks(np.arange(0,21,1))
+            plt.grid()
+            plt.minorticks_on()
+            plt.legend()
+            plt.show()
