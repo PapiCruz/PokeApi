@@ -4,7 +4,10 @@ import numpy as np
 import numpy
 import matplotlib.pyplot as plt
 import openpyxl
-
+nombres = []
+altura = []
+peso = []
+estadistica = ["media","mediana"]
 def bus_pokemon():
     nombre_o_id = input("\nIngrese el nombre o ID del Pokemon que desea buscar en la Pokedex: ")
 
