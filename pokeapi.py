@@ -83,6 +83,33 @@ def graficar_datos(data):
     except:
         print("No se pudieron guardar los datos, Intente de nuevo.")
 
+def guardar_en_archivo(data):
+    print("IMPORTANTE USO DE LA POKEDEX: si no existe la pokedex se creara uno nuevo para usted, en caso contrario el pokemon será agregado a tu pokedex existente \n")
+    nombre_archivo:input("\nIngrese el nombre de tu nuevo/existente pokedex: ")
+    try:
+        with open(nombre_archivo,'a') as archivo:
+            archivo.write(f"Nombre: {data['name'].capitalize()}\n")
+            archivo.write(f"ID: {data['id']}\n")
+            archivo.write(f"Altura: {data['height']/10} metros\n")
+            archivo.write(f"Peso: {data['weight']/10} kg\n")
+            tipos = [tipo['type']['name'] for tipo in data['types']]
+            archivo.write(f"Tipos: {', '.join(tipos)}\n")
+            archivo.write("\n")
+        print(f"\nLos datos del Pokemon se han guardado en la pokedex llamada '{nombre_archivo}' correctamente.")
+    except:
+        print("\nNo se pudo guardarla pokedex. Intente nuevamente.")
+
+def guardar_promedios_en_excel(estadisticas, valores, excel_file):
+    try:
+        workbook = openpyxl.Workbook()
+        sheet = workbook.active
+        sheet.append(["Estadística", "Valor"])
+        for estadistica, valor in zip(estadisticas, valores):
+            sheet.append([estadistica, valor])
+        workbook.save(excel_file)
+        print(f"Estadísticas guardadas en el archivo Excel '{excel_file}' correctamente.")
+    except Exception as e:
+        print(f"No se pudieron guardar las estadísticas en el archivo Excel. Error: {str(e)}")
 
 def mostrar_gra():
     grafica = input("\nIngrese el nombre del archivo donde guardo los datos a graficar: ")
@@ -118,3 +145,8 @@ def mostrar_gra():
             plt.minorticks_on()
             plt.legend()
             plt.show()
+        promedios = [np.mean(altura), np.median(altura)]
+        guardar_promedios_en_excel(estadistica, promedios, "estadisticas_pokemon.xlsx")
+        print("Se graficó correctamente y las estadísticas se guardaron en 'estadisticas_pokemon.xlsx'.")
+    except Exception as e:
+        print(f"No se encontraron gráficas o hubo un error: {str(e)}")
