@@ -114,6 +114,17 @@ def guardar_promedios_en_excel(estadisticas, valores, excel_file):
     except Exception as e:
         print(f"No se pudieron guardar las estadísticas en el archivo Excel. Error: {str(e)}")
 
+def leer_archivo():
+    nombre_archivo = input("\nIngrese de tu pokedex para leer los datos: ")
+
+    try:
+        with open(nombre_archivo, 'r') as archivo:
+            print(archivo.read())
+    except:
+        print("\nNo se pudo leer la pokedex, la pokedex que solicitó no existe. Intente nuevamente.")
+
+
+
 def mostrar_gra():
     grafica = input("\nIngrese el nombre del archivo donde guardo los datos a graficar: ")
 
