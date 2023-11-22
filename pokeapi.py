@@ -35,7 +35,6 @@ def bus_pokemon():
     else:
         print("\nNo se pudo encontrar el Pokemon en la Pokedex. Intente nuevamente.")
 
-
 def lista_pokemon():
     offset = 0
     limit = input("Ingrese la cantidad de pokemones en lista que desea ver: ")
@@ -69,6 +68,32 @@ def lista_pokemon():
     else:
         print("Digito incorrecto, ingrese por favor un número")
         return
+    
+def guardar_en_archivo(data):
+        print("IMPORTANTE USO DE LA POKEDEX: si no existe la pokedex se creara uno nuevo para usted, en caso contrario el pokemon será agregado a tu pokedex existente \n")
+        nombre_archivo = input("\nIngrese el nombre de tu nuevo/existente pokedex: ")
+        try:
+            with open(nombre_archivo, 'a') as archivo:
+                archivo.write(f"Nombre: {data['name'].capitalize()}\n")
+                archivo.write(f"ID: {data['id']}\n")
+                archivo.write(f"Altura: {data['height']/10} metros\n")
+                archivo.write(f"Peso: {data['weight']/10} kg\n")
+                tipos = [tipo['type']['name'] for tipo in data['types']]
+                archivo.write(f"Tipos: {', '.join(tipos)}\n")
+                archivo.write("\n")
+            print(f"\nLos datos del Pokemon se han guardado en la pokedex llamada '{nombre_archivo}' correctamente.")  
+        except:
+            print("\nNo se pudo guardarla pokedex. Intente nuevamente.")
+
+    
+def leer_archivo():
+    nombre_archivo = input("\nIngrese de tu pokedex para leer los datos: ")
+
+    try:
+        with open(nombre_archivo, 'r') as archivo:
+            print(archivo.read())
+    except:
+        print("\nNo se pudo leer la pokedex, la pokedex que solicitó no existe. Intente nuevamente.")
 
 def graficar_datos(data):
     print ("La altura de los pokemón que deseas graficar se guardarán aquí para graficarlos.")
@@ -86,21 +111,6 @@ def graficar_datos(data):
     except:
         print("No se pudieron guardar los datos, Intente de nuevo.")
 
-def guardar_en_archivo(data):
-    print("IMPORTANTE USO DE LA POKEDEX: si no existe la pokedex se creara uno nuevo para usted, en caso contrario el pokemon será agregado a tu pokedex existente \n")
-    nombre_archivo:input("\nIngrese el nombre de tu nuevo/existente pokedex: ")
-    try:
-        with open(nombre_archivo,'a') as archivo:
-            archivo.write(f"Nombre: {data['name'].capitalize()}\n")
-            archivo.write(f"ID: {data['id']}\n")
-            archivo.write(f"Altura: {data['height']/10} metros\n")
-            archivo.write(f"Peso: {data['weight']/10} kg\n")
-            tipos = [tipo['type']['name'] for tipo in data['types']]
-            archivo.write(f"Tipos: {', '.join(tipos)}\n")
-            archivo.write("\n")
-        print(f"\nLos datos del Pokemon se han guardado en la pokedex llamada '{nombre_archivo}' correctamente.")
-    except:
-        print("\nNo se pudo guardarla pokedex. Intente nuevamente.")
 
 def guardar_promedios_en_excel(estadisticas, valores, excel_file):
     try:
@@ -113,16 +123,6 @@ def guardar_promedios_en_excel(estadisticas, valores, excel_file):
         print(f"Estadísticas guardadas en el archivo Excel '{excel_file}' correctamente.")
     except Exception as e:
         print(f"No se pudieron guardar las estadísticas en el archivo Excel. Error: {str(e)}")
-
-def leer_archivo():
-    nombre_archivo = input("\nIngrese de tu pokedex para leer los datos: ")
-
-    try:
-        with open(nombre_archivo, 'r') as archivo:
-            print(archivo.read())
-    except:
-        print("\nNo se pudo leer la pokedex, la pokedex que solicitó no existe. Intente nuevamente.")
-
 
 
 def mostrar_gra():
